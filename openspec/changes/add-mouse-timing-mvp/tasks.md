@@ -8,15 +8,15 @@
 
 ## 2. CI pipeline (needed early: Windows code compiles only on CI)
 
-- [ ] 2.1 Add `.github/workflows/ci.yml`: a `windows-latest` job (fmt, clippy `-D warnings`, build, test, `cargo deny check`) and a `macos-latest` job (`cargo test -p analysis`), with every third-party action pinned to a commit SHA; verify with `actionlint` locally
+- [x] 2.1 Add `.github/workflows/ci.yml`: a `windows-latest` job (fmt, clippy `-D warnings`, build, test, `cargo deny check`) and a `macos-latest` job (`cargo test -p analysis`), with every third-party action pinned to a commit SHA; verify with `actionlint` locally
 - [ ] 2.2 Create the GitHub repository (with the user's confirmation of name and visibility), push `main`, and verify both CI jobs pass on the scaffold
 
 ## 3. Delivery-timing analysis (`crates/analysis`, tested on macOS)
 
-- [ ] 3.1 Define the recorded-run types (`MouseEvent` with device key, dx/dy, buttons, QPC ticks, batch id and index; `RecordedRun` with QPC frequency, settings and drop count), deriving serde; verify a JSON round-trip test
-- [ ] 3.2 Implement arrival grouping and per-device intervals in integer nanoseconds; verify unit tests for the single-device, interleaved-devices and batched-reports scenarios
-- [ ] 3.3 Implement idle-pause exclusion (≥ 20× median or ≥ 50 ms) and the statistics summary (count, median, implied rate, nearest-rank p50/p95/p99 absolute deviation); verify tests for the steady-stream, outliers and user-stops-moving scenarios
-- [ ] 3.4 Implement gap counting (≥ 2× median, longest, per 10,000), the batched share, the "not enough data" rule (< 500 intervals) and the untrustworthy flags with reasons; verify tests for each scenario in `specs/delivery-timing-analysis/spec.md`
+- [x] 3.1 Define the recorded-run types (`MouseEvent` with device key, dx/dy, buttons, QPC ticks, batch id and index; `RecordedRun` with QPC frequency, settings and drop count), deriving serde; verify a JSON round-trip test
+- [x] 3.2 Implement arrival grouping and per-device intervals in integer nanoseconds; verify unit tests for the single-device, interleaved-devices and batched-reports scenarios
+- [x] 3.3 Implement idle-pause exclusion (≥ 20× median or ≥ 50 ms) and the statistics summary (count, median, implied rate, nearest-rank p50/p95/p99 absolute deviation); verify tests for the steady-stream, outliers and user-stops-moving scenarios
+- [x] 3.4 Implement gap counting (≥ 2× median, longest, per 10,000), the batched share, the "not enough data" rule (< 500 intervals) and the untrustworthy flags with reasons; verify tests for each scenario in `specs/delivery-timing-analysis/spec.md`
 - [ ] 3.5 Add a property test (`proptest`) showing that re-analysing the same run gives identical results, plus synthetic-stream fixtures (1 kHz steady, 8 kHz jittery, 1 kHz with idle and gaps); verify `cargo test -p analysis` passes on macOS and on the CI Windows job
 
 ## 4. Raw Input capture (`crates/capture`, Windows)

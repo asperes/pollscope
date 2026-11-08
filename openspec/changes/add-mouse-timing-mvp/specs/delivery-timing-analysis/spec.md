@@ -22,22 +22,22 @@ The system SHALL compute the interval between each pair of consecutive arrivals 
 - **THEN** intervals for A are computed only between A's reports, and likewise for B
 
 ### Requirement: Exclude idle pauses
-The system SHALL treat an interval as an idle pause, not a delivery gap, when it is at least 20 times the run's median interval or at least 50 ms, and SHALL exclude idle pauses from all timing statistics while reporting their count.
+The system SHALL treat an interval as an idle pause, not a delivery gap, when it is at least 20 times the median of all the run's intervals or at least 50 ms, and SHALL exclude idle pauses from all timing statistics while reporting their count.
 
 #### Scenario: User stops moving
 - **WHEN** a 1000 Hz mouse is held still for 300 ms in the middle of a run
 - **THEN** that 300 ms interval is counted as one idle pause and is not counted as a gap or used in jitter
 
 ### Requirement: Summarize interval statistics
-For each analysed run, the system SHALL report the number of intervals used, the median interval, the implied report rate (1 / median), and the 50th, 95th and 99th percentiles of each interval's absolute deviation from the median.
+For each analysed run, the system SHALL report the number of intervals used, the median interval, the implied report rate (1 / median), and the 50th, 95th and 99th percentiles of each interval's absolute deviation from the median. Percentiles, including the median, use the nearest-rank method.
 
 #### Scenario: Perfectly steady stream
 - **WHEN** every used interval is exactly 1000 µs
 - **THEN** the median is 1000 µs, the implied rate is 1000 Hz, and every deviation percentile is 0 µs
 
 #### Scenario: Mostly steady with outliers
-- **WHEN** 990 intervals are 1000 µs and 10 intervals are 3000 µs
-- **THEN** the median is 1000 µs and the 99th-percentile deviation is 2000 µs
+- **WHEN** 980 intervals are 1000 µs and 20 intervals are 3000 µs
+- **THEN** the median is 1000 µs, the 95th-percentile deviation is 0 µs and the 99th-percentile deviation is 2000 µs
 
 ### Requirement: Count delivery gaps
 The system SHALL count as a gap every non-idle interval of at least 2 times the median interval, and SHALL report the gap count, the longest gap, and gaps per 10,000 intervals.

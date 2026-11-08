@@ -13,8 +13,7 @@ capture.workspace = true
 serde.workspace = true
 serde_json.workspace = true
 csv.workspace = true
-gpui.workspace = true
-gpui-component.workspace = true
+gpui-kit.workspace = true
 
 [lints]
 workspace = true

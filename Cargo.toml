@@ -20,8 +20,8 @@ sha2 = "=0.11.1"
 rtrb = "=0.4.1"
 proptest = "=1.12.0"
 windows = "=0.62.2"
-gpui = { package = "gpui-pre", version = "=0.3.11" }
-gpui-component = "=0.9.0"
+# Umbrella crate: pins gpui-pre =0.3.11 and re-exports GPUI, gpui-base and gpui-component.
+gpui-kit = "=0.9.0"
 
 [workspace.lints.rust]
 unsafe_op_in_unsafe_fn = "deny"
