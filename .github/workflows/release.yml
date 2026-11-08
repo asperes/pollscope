@@ -1,0 +1,78 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*.*.*"]
+
+permissions:
+  contents: write
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  release:
+    name: Build and publish
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Install pinned toolchain
+        run: rustup show active-toolchain || rustup toolchain install
+
+      - name: Tag must match the app version
+        id: version
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          ver=$(cargo metadata --no-deps --format-version 1 \
+            | jq -r '.packages[] | select(.name == "pollscope") | .version')
+          if [ "$tag" != "$ver" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match app version $ver"
+            exit 1
+          fi
+          echo "version=$ver" >> "$GITHUB_OUTPUT"
+          if [[ "$ver" == *-* ]]; then echo "prerelease=true" >> "$GITHUB_OUTPUT"; else echo "prerelease=false" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Test
+        run: cargo test --workspace --locked
+
+      - name: Build release
+        run: cargo build --release --locked -p pollscope
+
+      - name: Executable is self-contained
+        shell: pwsh
+        run: ./scripts/check-self-contained.ps1 -Exe target/release/pollscope.exe
+
+      - name: Package
+        id: package
+        run: |
+          name="pollscope-v${{ steps.version.outputs.version }}-windows-x64"
+          mkdir -p "dist/$name"
+          cp target/release/pollscope.exe LICENSE README.md "dist/$name/"
+          {
+            echo "app=pollscope"
+            echo "version=${{ steps.version.outputs.version }}"
+            echo "source_commit=$GITHUB_SHA"
+            echo "rustc=$(rustc -V)"
+            echo "build_date_utc=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo "target=x86_64-pc-windows-msvc"
+            echo "runner_image=${ImageOS:-unknown} ${ImageVersion:-}"
+          } > "dist/$name/BUILDINFO.txt"
+          (cd "dist/$name" && sha256sum pollscope.exe LICENSE README.md BUILDINFO.txt > ../contents.sha256)
+          (cd dist && 7z a -tzip -mx=9 "$name.zip" "$name" > /dev/null)
+          (cd dist && { sha256sum "$name.zip"; sed "s#  #  $name/#" contents.sha256; } > SHA256SUMS.txt)
+          cat dist/SHA256SUMS.txt
+          echo "zip=dist/$name.zip" >> "$GITHUB_OUTPUT"
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@8a0cd651e5b2365bd640854a3fa5dfc70e4875f3 # v3.0.4
+        with:
+          name: pollscope v${{ steps.version.outputs.version }}
+          prerelease: ${{ steps.version.outputs.prerelease }}
+          generate_release_notes: true
+          fail_on_unmatched_files: true
+          files: |
+            ${{ steps.package.outputs.zip }}
+            dist/SHA256SUMS.txt
