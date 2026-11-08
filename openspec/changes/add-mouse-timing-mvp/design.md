@@ -56,7 +56,7 @@ A single `Entity<AppState>` holds the device list, the selection, the live windo
 - *Why:* gpui-component's charts are built for business dashboards, and a µs-scale scatter plot of tens of thousands of points needs control over downsampling.
 
 ### GPUI source: `gpui-pre` via gpui-component
-`gpui-component` 0.9.0 depends on `gpui-pre =0.3.11`, a crates.io snapshot of Zed's GPUI (zed@f816e1f) published by the gpui-component maintainer. The official `gpui` 0.2.2 published by Zed can't be combined with it. The app depends on `gpui-pre` (renamed to `gpui` in Cargo.toml) and `gpui-component` at exact versions.
+`gpui-component` 0.9.0 depends on `gpui-pre =0.3.11`, a crates.io snapshot of Zed's GPUI (zed@f816e1f) published by the gpui-component maintainer. The official `gpui` 0.2.2 published by Zed can't be combined with it. The app depends on the `gpui-kit` 0.9.0 umbrella crate, which pins `gpui-pre =0.3.11` and re-exports GPUI, gpui-base and gpui-component, at an exact version. The UI type-checks on macOS during development; the Windows build runs only on CI because gpui-pre's build script compiles DirectX shaders.
 - *Why:* ready-made widgets (button, dropdown, tabs, dialogs, theming) outweigh building our own. User decision, 2026-11-08.
 - *Alternative:* official `gpui` 0.2.2 with hand-built widgets. Rejected: more UI code on an older API.
 - *Trade-off:* the core UI crate comes from a single third-party publisher. Pin with `=`, and review the diff on every upgrade.
