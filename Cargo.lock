@@ -157,7 +157,7 @@ checksum = "683d7910e743518b0e34f1186f92494becacb047c7b6bf616c96772180fef923"
 
 [[package]]
 name = "analysis"
-version = "0.1.0"
+version = "0.1.0-rc.1"
 dependencies = [
  "proptest",
  "serde",
@@ -796,7 +796,7 @@ dependencies = [
 
 [[package]]
 name = "capture"
-version = "0.1.0"
+version = "0.1.0-rc.1"
 dependencies = [
  "analysis",
  "rtrb",
@@ -4760,7 +4760,7 @@ dependencies = [
 
 [[package]]
 name = "pollscope"
-version = "0.1.0"
+version = "0.1.0-rc.1"
 dependencies = [
  "analysis",
  "capture",
