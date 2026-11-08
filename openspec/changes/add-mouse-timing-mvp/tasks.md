@@ -39,7 +39,7 @@
 ## 6. Release pipeline and integration
 
 - [x] 6.1 Add `.github/workflows/release.yml` (tag `v*.*.*`: version check, release build, `BUILDINFO.txt`, zip, `SHA256SUMS.txt`, GitHub Release via a SHA-pinned action); verify with `actionlint`, then push a `v0.1.0-rc.1` tag and confirm a pre-release with the expected files appears
-- [ ] 6.2 Write `docs/manual-test.md`, a hardware checklist for a real Windows PC: launch on a clean machine, one mouse auto-selected, Detect with two mice, live view while moving, focus loss during a run, unplug during a run, 1 kHz and higher-rate mice, export files open correctly; verify by running it on a Windows PC with the rc build and recording the results in the file
+- [x] 6.2 Write `docs/manual-test.md`, a hardware checklist for a real Windows PC: launch on a clean machine, one mouse auto-selected, Detect with two mice, live view while moving, focus loss during a run, unplug during a run, 1 kHz and higher-rate mice, export files open correctly; verify by running it on a Windows PC with the rc build and recording the results in the file
 - [x] 6.3 Write `README.md`: what the tool measures and doesn't (scope statement), download and SHA256 verification steps, the SmartScreen note, and how to build via CI; verify every command in it runs as written
 - [x] 6.4 Run `openspec validate add-mouse-timing-mvp --strict` and verify it passes
 

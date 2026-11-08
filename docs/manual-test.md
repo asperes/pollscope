@@ -26,4 +26,4 @@ CI runners have no real mouse, so these checks run by hand on a Windows PC with 
 
 | Build | Date | Windows version | Mice tested | Passed | Notes |
 |---|---|---|---|---|---|
-| | | | | | |
+| v0.1.0-rc.2 | 2026-11-08 | not recorded | not recorded | 1–5, 7–14 | Reported working by the maintainer. Not checked: #6 (unplug a non-selected mouse) and #15 (network activity); #15 is also covered by the CI network-crate ban. |
