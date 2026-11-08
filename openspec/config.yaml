@@ -1,0 +1,45 @@
+schema: spec-driven
+
+context: |
+  Windows-only desktop app (Windows 10 22H2+ and Windows 11, x86_64). No macOS/Linux targets.
+  Language: Rust (stable). UI: GPUI (zed-industries) with gpui-component; pin exact crate versions.
+  Developer works on macOS: all builds, tests that touch Windows APIs, and releases run on
+  GitHub Actions windows runners. Pure-logic crates must stay platform-independent so their
+  unit tests also run locally on macOS.
+  Releases are published as GitHub Releases from tagged commits via GitHub Actions.
+  This is an original tool. InputLab (closed-source, studied only via its public README and a
+  static REA metadata pass) is a reference for which Windows APIs exist, nothing more: do not
+  copy its code, names, branding, UI layout, scoring formulas or text.
+  Measurements describe host-side Raw Input delivery timing, not device polling or end-to-end
+  latency; UI and docs must say so.
+
+# Project context (optional)
+# Add only constraints that should guide OpenSpec artifacts and workflows.
+# Include constraints an agent cannot infer by reading the code.
+# Keep general project documentation and discoverable codebase facts out.
+# Example:
+#   context: |
+#     Designs and tasks must cover Windows, macOS, and Linux
+#     Write all artifacts in Spanish
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+# Example:
+#   rules:
+#     proposal:
+#       - Keep proposals under 500 words
+#       - Always state what is out of scope
+#     tasks:
+#       - Break tasks into chunks of max 2 hours
+
+# Per-operation guidance (optional)
+# Add advisory guidance for how apply and archive work should be conducted.
+# This is separate from artifact rules above.
+# Example:
+#   operations:
+#     apply:
+#       guidance:
+#         - Keep test summaries concise
+#     archive:
+#       guidance:
+#         - Summarize the archive outcome before finishing

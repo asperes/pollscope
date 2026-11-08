@@ -1,0 +1,18 @@
+[package]
+name = "analysis"
+description = "Platform-independent delivery-timing analysis of recorded mouse reports"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+serde.workspace = true
+
+[dev-dependencies]
+serde_json.workspace = true
+proptest.workspace = true
+
+[lints]
+workspace = true

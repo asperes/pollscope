@@ -1,0 +1,59 @@
+[graph]
+targets = ["x86_64-pc-windows-msvc"]
+all-features = false
+
+[advisories]
+version = 2
+yanked = "deny"
+# Vulnerabilities always fail. "Unmaintained" notices fail only for crates we
+# depend on directly; transitive ones from GPUI (instant, paste, rustybuzz,
+# ttf-parser as of 2026-11) are reviewed on each GPUI upgrade instead.
+unmaintained = "workspace"
+
+[licenses]
+version = 2
+confidence-threshold = 0.9
+allow = [
+    "MIT",
+    "Apache-2.0",
+    "Apache-2.0 WITH LLVM-exception",
+    "Unicode-3.0",
+    "Zlib",
+    "Unlicense",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "0BSD",
+    "BSL-1.0",
+    "CC0-1.0",
+    "MPL-2.0",
+]
+
+[bans]
+multiple-versions = "allow"
+wildcards = "allow"
+# No-network requirement: deny every crate that implements an HTTP client,
+# TLS or a socket protocol. GPUI's `http` types and smol's `async-net` contain
+# no client of their own and stay allowed.
+deny = [
+    { name = "reqwest" },
+    { name = "hyper" },
+    { name = "hyper-util" },
+    { name = "ureq" },
+    { name = "isahc" },
+    { name = "curl" },
+    { name = "curl-sys" },
+    { name = "native-tls" },
+    { name = "rustls" },
+    { name = "openssl" },
+    { name = "openssl-sys" },
+    { name = "tungstenite" },
+    { name = "async-tungstenite" },
+    { name = "quinn" },
+    { name = "tokio" },
+    { name = "gpui-pre-reqwest-client" },
+]
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]
