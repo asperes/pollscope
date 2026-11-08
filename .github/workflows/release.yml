@@ -60,9 +60,11 @@ jobs:
             echo "target=x86_64-pc-windows-msvc"
             echo "runner_image=${ImageOS:-unknown} ${ImageVersion:-}"
           } > "dist/$name/BUILDINFO.txt"
-          (cd "dist/$name" && sha256sum pollscope.exe LICENSE README.md BUILDINFO.txt > ../contents.sha256)
           (cd dist && 7z a -tzip -mx=9 "$name.zip" "$name" > /dev/null)
-          (cd dist && { sha256sum "$name.zip"; sed "s#  #  $name/#" contents.sha256; } > SHA256SUMS.txt)
+          # Paths are relative to the download folder: the zip, then each file
+          # as it appears after unzipping (`sha256sum -c SHA256SUMS.txt` there).
+          (cd dist && sha256sum "$name.zip" "$name"/pollscope.exe "$name"/LICENSE \
+            "$name"/README.md "$name"/BUILDINFO.txt > SHA256SUMS.txt)
           cat dist/SHA256SUMS.txt
           echo "zip=dist/$name.zip" >> "$GITHUB_OUTPUT"
 

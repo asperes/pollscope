@@ -31,7 +31,13 @@ PowerShell:
 Get-FileHash .\pollscope-v0.1.0-windows-x64.zip -Algorithm SHA256
 ```
 
-Compare the hash with the zip's line in `SHA256SUMS.txt`. `BUILDINFO.txt` inside the zip names the exact source commit and Rust version used.
+Compare the hash with the zip's line in `SHA256SUMS.txt`. To check every file at once, unzip next to the zip and run this in Git Bash or WSL, from the folder holding the zip, the unzipped folder and `SHA256SUMS.txt`:
+
+```sh
+sha256sum -c SHA256SUMS.txt
+```
+
+`BUILDINFO.txt` inside the zip names the exact source commit and Rust version used.
 
 ## Using it
 
