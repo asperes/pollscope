@@ -1,3 +1,5 @@
+# Link the C runtime statically. Note: a RUSTFLAGS environment variable
+# replaces this setting entirely; CI's self-contained check catches that.
 # Link the C runtime statically so the released .exe needs no VC++ redistributable.
 [target.x86_64-pc-windows-msvc]
 rustflags = ["-C", "target-feature=+crt-static"]

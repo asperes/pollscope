@@ -14,7 +14,8 @@ concurrency:
 
 env:
   CARGO_TERM_COLOR: always
-  RUSTFLAGS: -D warnings
+  # Don't set RUSTFLAGS here: it would replace .cargo/config.toml's rustflags
+  # (+crt-static). Warnings already fail the build through clippy -D warnings.
 
 jobs:
   windows:
