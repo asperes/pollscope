@@ -29,7 +29,7 @@
 
 ## 5. GPUI measurement UI (`crates/app`, Windows)
 
-- [ ] 5.1 Create the GPUI application shell (window, title, `windows_subsystem = "windows"`, `AppState` entity, 60 Hz drain timer) wired to the capture crate; verify the CI Windows job builds the release binary
+- [x] 5.1 Create the GPUI application shell (window, title, `windows_subsystem = "windows"`, `AppState` entity, 60 Hz drain timer) wired to the capture crate; verify the CI Windows job builds the release binary
 - [x] 5.2 Build device selection: a dropdown of mice, auto-select when there is only one, "Detect" (next mouse that moves), and list refresh on connect/disconnect; verify a unit test of the selection state machine
 - [x] 5.3 Build the live view: current rate (or "—" at rest), a canvas interval-over-time plot with min/max-per-column downsampling, and a canvas histogram; verify a unit test of the downsampler, plus manual checklist items for both visuals
 - [x] 5.4 Build timed runs (5/10/30 s, countdown, move-the-mouse instruction, cancel, early end on device removal) feeding `analysis`; verify a unit test of the run state machine, including the cancel and device-removed paths
@@ -38,7 +38,7 @@
 
 ## 6. Release pipeline and integration
 
-- [ ] 6.1 Add `.github/workflows/release.yml` (tag `v*.*.*`: version check, release build, `BUILDINFO.txt`, zip, `SHA256SUMS.txt`, GitHub Release via a SHA-pinned action); verify with `actionlint`, then push a `v0.1.0-rc.1` tag and confirm a pre-release with the expected files appears
+- [x] 6.1 Add `.github/workflows/release.yml` (tag `v*.*.*`: version check, release build, `BUILDINFO.txt`, zip, `SHA256SUMS.txt`, GitHub Release via a SHA-pinned action); verify with `actionlint`, then push a `v0.1.0-rc.1` tag and confirm a pre-release with the expected files appears
 - [ ] 6.2 Write `docs/manual-test.md`, a hardware checklist for a real Windows PC: launch on a clean machine, one mouse auto-selected, Detect with two mice, live view while moving, focus loss during a run, unplug during a run, 1 kHz and higher-rate mice, export files open correctly; verify by running it on a Windows PC with the rc build and recording the results in the file
 - [x] 6.3 Write `README.md`: what the tool measures and doesn't (scope statement), download and SHA256 verification steps, the SmartScreen note, and how to build via CI; verify every command in it runs as written
 - [x] 6.4 Run `openspec validate add-mouse-timing-mvp --strict` and verify it passes
